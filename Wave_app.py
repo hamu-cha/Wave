@@ -70,7 +70,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 
-st.title("互いに近づく波のアニメーション")
+st.title("波の合成")
 
 # 波設定
 x2 = np.linspace(0, 10, 400)
