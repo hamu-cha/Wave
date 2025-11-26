@@ -55,14 +55,27 @@ y_p = amp*np.sin(2*np.pi*((x_point - x_shift)/8))
 
 y_line = np.where(L_mask, y_l, 0)
 y_point = np.where(P_mask, y_p, 0)
-ax.plot(x_line, y_line, '-', color='orange', zorder=3)
-ax.plot(x_point, y_point, linestyle='None', marker='o', color='orange', zorder=4)
+
+xp_white = x_point < 0
+xp_color  = x_point >= 0
+xl_white = x_line < 0
+xl_color  = x_line >= 0
+
+ax.plot(x_line[xl_white], y_line[xl_white], '-', color='white', alpha = 0, zorder=3)
+ax.plot(x_point[xp_white], y_point[xp_white], 
+        linestyle='None', marker='o', color='white', alpha = 0, zorder=4)
+ax.plot(x_line[xl_color], y_line[xl_color], '-', color='orange', zorder=3)
+ax.plot(x_point[xp_color], y_point[xp_color], 
+        linestyle='None', marker='o', color='orange', zorder=4)
 ax.plot([-1, 17], [0, 0], '-', color='black', zorder=2)
 
 x_longitudinal = np.where(P_mask, x_rest + y_p, x_rest)
-ax.scatter(x_longitudinal, 2*np.ones(len(x_rest)), color='black', zorder=4)
+ax.scatter(x_longitudinal[xp_white], 2*np.ones(len(x_rest))[xp_white], 
+           color='white', alpha = 0, zorder=4)
+ax.scatter(x_longitudinal[xp_color], 2*np.ones(len(x_rest))[xp_color], 
+           color='black', zorder=4)
 
-ax.set_xlim(0, 16)
+ax.set_xlim(-1, 16)
 ax.set_ylim(-2, 3)
 ax.set_xticks(np.arange(0, 17, 1))
 ax.set_xticklabels([])
